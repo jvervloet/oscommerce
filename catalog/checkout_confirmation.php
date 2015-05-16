@@ -5,7 +5,7 @@
   osCommerce, Open Source E-Commerce Solutions
   http://www.oscommerce.com
 
-  Copyright (c) 2014 osCommerce
+  Copyright (c) 2010 osCommerce
 
   Released under the GNU General Public License
 */
@@ -90,13 +90,11 @@
   require(DIR_WS_INCLUDES . 'template_top.php');
 ?>
 
-<h1><?php echo HEADING_TITLE; ?></h1>
+<div class="page-header">
+  <h1><?php echo HEADING_TITLE; ?></h1>
+</div>
 
 <?php
-  if ($messageStack->size('checkout_confirmation') > 0) {
-    echo $messageStack->output('checkout_confirmation');
-  }
-
   if (isset($$payment->form_action_url)) {
     $form_action_url = $$payment->form_action_url;
   } else {
@@ -299,7 +297,7 @@
     echo $payment_modules->process_button();
   }
 
-  echo tep_draw_button(IMAGE_BUTTON_CONFIRM_ORDER, 'check', null, 'primary');
+  echo tep_draw_button(IMAGE_BUTTON_CONFIRM_ORDER, 'glyphicon-ok', null, 'primary');
 ?>
 
     </div>

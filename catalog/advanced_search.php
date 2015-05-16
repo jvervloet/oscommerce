@@ -107,11 +107,13 @@ function popupWindow(url) {
 }
 //--></script>
 
-<h1><?php echo HEADING_TITLE_1; ?></h1>
+<div class="page-header">
+  <h1><?php echo HEADING_TITLE_1; ?></h1>
+</div>
 
 <?php
   if ($messageStack->size('search') > 0) {
-    echo $messageStack->output('search');
+    echo '<div class="alert alert-warning">' . $messageStack->output('search') . '</div>';
   }
 ?>
 
@@ -129,7 +131,7 @@ function popupWindow(url) {
 
     <div>
       <span><?php echo '<a href="' . tep_href_link(FILENAME_POPUP_SEARCH_HELP) . '" target="_blank" onclick="$(\'#helpSearch\').dialog(\'open\'); return false;">' . TEXT_SEARCH_HELP_LINK . '</a>'; ?></span>
-      <span style="float: right;"><?php echo tep_draw_button(IMAGE_BUTTON_SEARCH, 'search', null, 'primary'); ?></span>
+      <span style="float: right;"><?php echo tep_draw_button(IMAGE_BUTTON_SEARCH, 'glyphicon-search', null, 'primary'); ?></span>
     </div>
 
     <div id="helpSearch" title="<?php echo HEADING_SEARCH_HELP; ?>">
@@ -172,11 +174,33 @@ $('#helpSearch').dialog({
       </tr>
       <tr>
         <td class="fieldKey"><?php echo ENTRY_DATE_FROM; ?></td>
-        <td class="fieldValue"><?php echo tep_draw_input_field('dfrom', '', 'id="dfrom"'); ?><script type="text/javascript">$('#dfrom').datepicker({dateFormat: '<?php echo JQUERY_DATEPICKER_FORMAT; ?>', changeMonth: true, changeYear: true, yearRange: '-10:+0'});</script></td>
+        <td class="fieldValue">
+          <?php echo tep_draw_input_field('dfrom', '', 'id="dfrom"'); ?>
+          <script type="text/javascript">
+          var nowTemp = new Date();
+          var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
+          $('#dfrom').datepicker({
+            dateFormat: '<?php echo JQUERY_DATEPICKER_FORMAT; ?>',
+            onRender: function(date) {
+              return date.valueOf() > now.valueOf() ? 'disabled' : '';
+            }
+          });
+          </script>
+        </td>
       </tr>
       <tr>
         <td class="fieldKey"><?php echo ENTRY_DATE_TO; ?></td>
-        <td class="fieldValue"><?php echo tep_draw_input_field('dto', '', 'id="dto"'); ?><script type="text/javascript">$('#dto').datepicker({dateFormat: '<?php echo JQUERY_DATEPICKER_FORMAT; ?>', changeMonth: true, changeYear: true, yearRange: '-10:+0'});</script></td>
+        <td class="fieldValue">
+          <?php echo tep_draw_input_field('dto', '', 'id="dto"'); ?>
+          <script type="text/javascript">
+            $('#dto').datepicker({
+              dateFormat: '<?php echo JQUERY_DATEPICKER_FORMAT; ?>',
+              onRender: function(date) {
+                return date.valueOf() > now.valueOf() ? 'disabled' : '';
+              }
+            });
+          </script>
+        </td>
       </tr>
     </table>
   </div>
